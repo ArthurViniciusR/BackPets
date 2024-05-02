@@ -4,9 +4,11 @@ import { CreateProductService } from "../services/CreateProductService";
 class CreateProductController{
     async handle(request: FastifyRequest, reply: FastifyReply){
 
-        const productService = new CreateProductService()
+        const { type, name, price, description } = 
+        request.body as {type: string, name: string, price: number, description: string}
 
-        const product = await productService.execute();
+        const productService = new CreateProductService()
+        const product = await productService.execute({type, name, price, description});
 
         reply.send(product)
     }
